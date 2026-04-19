@@ -2,15 +2,46 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useState } from 'react';
 import TrustCenterModal from './TrustCenterModal';
+import Grainient from './Grainient';
+import Safety from './Safety';
+import LetterGlitch from './LetterGlitch';
 
 export default function Alignment() {
   const { t } = useLanguage();
   const [isTrustCenterOpen, setIsTrustCenterOpen] = useState(false);
 
   return (
-    <div id="alignment">
+    <div id="alignment" className="relative">
+      {/* Background Effect for Hero */}
+      <div className="absolute top-0 left-0 w-full h-[800px] z-0 opacity-40 pointer-events-none" style={{ maskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)' }}>
+        <Grainient
+          color1="#ff8c8c"
+          color2="#ff2727"
+          color3="#B497CF"
+          timeSpeed={0.25}
+          colorBalance={0.0}
+          warpStrength={1.0}
+          warpFrequency={5.0}
+          warpSpeed={2.0}
+          warpAmplitude={50.0}
+          blendAngle={0.0}
+          blendSoftness={0.05}
+          rotationAmount={500.0}
+          noiseScale={2.0}
+          grainAmount={0.1}
+          grainScale={2.0}
+          grainAnimated={false}
+          contrast={1.5}
+          gamma={1.0}
+          saturation={1.0}
+          centerX={0.0}
+          centerY={0.0}
+          zoom={0.9}
+        />
+      </div>
+
       {/* Hero Section for Alignment */}
-      <section className="max-w-7xl mx-auto px-8 mb-32 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center pt-20">
+      <section className="max-w-7xl mx-auto px-8 mb-32 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center pt-20 relative z-10">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -75,11 +106,27 @@ export default function Alignment() {
         </motion.div>
       </section>
 
-      {/* Section 1: DAG Decomposition */}
-      <section className="bg-surface-container-low py-32">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-            <motion.div 
+      {/* Wrapping Section 1, Section 2, and Safety with LetterGlitch Background */}
+      <div className="relative w-full overflow-hidden bg-black">
+        {/* LetterGlitch Background - Sticky to viewport for full smooth coverage */}
+        <div className="absolute inset-0 z-0 opacity-80 pointer-events-none" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 2%, black 98%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 2%, black 98%, transparent 100%)' }}>
+          <div className="sticky top-0 left-0 w-full h-screen">
+            <LetterGlitch
+              glitchSpeed={50}
+              centerVignette={false}
+              outerVignette={true}
+              smooth={true}
+              glitchColors={['#00FF41', '#008F11', '#03A062']} // Classic Hacker Matrix Green
+            />
+          </div>
+        </div>
+
+        <div className="relative z-10 w-full backdrop-blur-sm bg-black/50">
+          {/* Section 1: DAG Decomposition */}
+          <section className="py-32">
+            <div className="max-w-7xl mx-auto px-8">
+              <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -102,9 +149,9 @@ export default function Alignment() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
-              className="bg-surface p-8 rounded-2xl border border-outline-variant/10 hover:border-primary-container transition-colors group"
+              className="bg-black/40 backdrop-blur-md p-8 rounded-2xl border border-outline-variant/10 hover:border-primary-container transition-colors group"
             >
-              <div className="w-12 h-12 bg-surface-container-highest flex items-center justify-center rounded-xl mb-6 group-hover:bg-primary-container transition-colors">
+              <div className="w-12 h-12 bg-white/5 flex items-center justify-center rounded-xl mb-6 group-hover:bg-primary-container transition-colors">
                 <span className="material-symbols-outlined text-primary group-hover:text-white">account_tree</span>
               </div>
               <h3 className="text-xl font-bold mb-4">{t('alignment.mod1.card1.title')}</h3>
@@ -117,9 +164,9 @@ export default function Alignment() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.6 }}
-              className="bg-surface p-8 rounded-2xl border border-outline-variant/10 hover:border-primary-container transition-colors group"
+              className="bg-black/40 backdrop-blur-md p-8 rounded-2xl border border-outline-variant/10 hover:border-primary-container transition-colors group"
             >
-              <div className="w-12 h-12 bg-surface-container-highest flex items-center justify-center rounded-xl mb-6 group-hover:bg-primary-container transition-colors">
+              <div className="w-12 h-12 bg-white/5 flex items-center justify-center rounded-xl mb-6 group-hover:bg-primary-container transition-colors">
                 <span className="material-symbols-outlined text-primary group-hover:text-white">fact_check</span>
               </div>
               <h3 className="text-xl font-bold mb-4">{t('alignment.mod1.card2.title')}</h3>
@@ -132,9 +179,9 @@ export default function Alignment() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.7 }}
-              className="bg-surface p-8 rounded-2xl border border-outline-variant/10 hover:border-primary-container transition-colors group"
+              className="bg-black/40 backdrop-blur-md p-8 rounded-2xl border border-outline-variant/10 hover:border-primary-container transition-colors group"
             >
-              <div className="w-12 h-12 bg-surface-container-highest flex items-center justify-center rounded-xl mb-6 group-hover:bg-primary-container transition-colors">
+              <div className="w-12 h-12 bg-white/5 flex items-center justify-center rounded-xl mb-6 group-hover:bg-primary-container transition-colors">
                 <span className="material-symbols-outlined text-primary group-hover:text-white">gavel</span>
               </div>
               <h3 className="text-xl font-bold mb-4">{t('alignment.mod1.card3.title')}</h3>
@@ -156,7 +203,7 @@ export default function Alignment() {
           >
             <div className="space-y-4">
               {/* Chain of Thought Mockup */}
-              <div className="bg-surface-container-highest rounded-xl p-6 border border-outline-variant/20 shadow-2xl">
+              <div className="bg-black/60 backdrop-blur-xl rounded-xl p-6 border border-outline-variant/30 shadow-[0_0_50px_rgba(0,255,65,0.1)]">
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-label text-[10px] text-primary">{t('alignment.mockup.thread')}</span>
                   <span className="flex gap-1">
@@ -221,6 +268,14 @@ export default function Alignment() {
           </motion.div>
         </div>
       </section>
+
+      {/* Integrate Safety directly inside the Alignment background wrap */}
+      <Safety />
+
+      {/* Close the relative z-10 wrap */}
+      </div>
+      {/* Close the main relative overflow-hidden background wrap */}
+      </div>
 
       <TrustCenterModal 
         isOpen={isTrustCenterOpen} 

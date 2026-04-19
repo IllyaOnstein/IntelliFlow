@@ -17,6 +17,7 @@ import {
   FaTelegram, 
   FaTiktok 
 } from 'react-icons/fa6';
+import Aurora from './Aurora';
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -30,22 +31,35 @@ export default function Footer() {
 
   return (
     <footer className="bg-surface border-t border-surface-container-high pt-16 pb-8 overflow-hidden relative">
-      {/* Global Toast */}
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-surface-container-highest border border-outline-variant/20 px-6 py-3 rounded-full shadow-2xl backdrop-blur-md text-sm font-medium text-on-surface"
-          >
-            {toast}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Aurora Background */}
+      <div className="absolute inset-x-0 bottom-0 top-0 z-0 opacity-80 pointer-events-none">
+        <Aurora
+          colorStops={["#ff676b","#B497CF","#ff0000"]}
+          blend={1.5}
+          amplitude={2.5}
+          speed={1.5}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      {/* Content wrapper with z-index to stay above background */}
+      <div className="relative z-10 w-full h-full">
+        {/* Global Toast */}
+        <AnimatePresence>
+          {toast && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-surface-container-highest border border-outline-variant/20 px-6 py-3 rounded-full shadow-2xl backdrop-blur-md text-sm font-medium text-on-surface"
+            >
+              {toast}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -171,6 +185,8 @@ export default function Footer() {
             </a>
           </div>
         </motion.div>
+      </div>
+      {/* End content wrapper */}
       </div>
     </footer>
   );

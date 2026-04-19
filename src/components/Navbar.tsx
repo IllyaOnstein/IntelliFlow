@@ -1,9 +1,10 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, ChevronDown, Activity } from 'lucide-react';
+import { Menu, X, Globe, ChevronDown, Activity, Network, Sparkles, Layers, Cpu, Target, Eye, CreditCard } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useModals } from '../contexts/ModalContext';
+import Dock, { DockItemData } from './Dock';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,12 +64,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
+  const scrollToSection = (id: string) => {
     setIsOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80; // Navbar height
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -80,6 +80,15 @@ export default function Navbar() {
       });
     }
   };
+
+  const dockItems: DockItemData[] = [
+    { id: 'workflow', label: t('nav.workflow'), icon: <Network size={22} />, onClick: () => scrollToSection('workflow') },
+    { id: 'features', label: t('nav.features'), icon: <Sparkles size={22} />, onClick: () => scrollToSection('features') },
+    { id: 'architecture', label: t('nav.architecture'), icon: <Layers size={22} />, onClick: () => scrollToSection('architecture') },
+    { id: 'capabilities', label: t('nav.capabilities'), icon: <Cpu size={22} />, onClick: () => scrollToSection('capabilities') },
+    { id: 'vision', label: t('nav.vision'), icon: <Eye size={22} />, onClick: () => scrollToSection('vision') },
+    { id: 'pricing', label: t('nav.pricing'), icon: <CreditCard size={22} />, onClick: () => scrollToSection('pricing') },
+  ];
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'pt-4' : 'pt-0'}`}>
@@ -93,28 +102,16 @@ export default function Navbar() {
             </Link>
             
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1 relative">
-              {!isDocsPage ? navLinks.map((link) => (
-                <a
-                  key={link.id}
-                  href={`#${link.id}`}
-                  onClick={(e) => scrollTo(e, link.id)}
-                  className={`relative font-headline font-bold tracking-tight text-xs uppercase px-4 py-2 rounded-full transition-colors duration-300 ease-in-out z-10 ${
-                    activeSection === link.id 
-                      ? 'text-white' 
-                      : 'text-[#e3beb8]/70 hover:text-white hover:bg-surface-container-high/30'
-                  }`}
-                >
-                  {activeSection === link.id && (
-                    <motion.div
-                      layoutId="activeNav"
-                      className="absolute inset-0 bg-primary-container rounded-full -z-10"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  {link.label}
-                </a>
-              )) : (
+            <div className="hidden lg:flex items-center space-x-1 relative ml-12">
+              {!isDocsPage ? (
+                <Dock 
+                  items={dockItems} 
+                  panelHeight={52} 
+                  baseItemSize={36} 
+                  magnification={50}
+                  activeItem={activeSection}
+                />
+              ) : (
                 <Link
                   to="/"
                   className="relative font-headline font-bold tracking-tight text-xs uppercase px-4 py-2 rounded-full transition-colors duration-300 ease-in-out z-10 text-[#e3beb8]/70 hover:text-white hover:bg-surface-container-high/30"
@@ -220,7 +217,7 @@ export default function Navbar() {
               <a
                 key={link.id}
                 href={`#${link.id}`}
-                onClick={(e) => scrollTo(e, link.id)}
+                onClick={(e) => { e.preventDefault(); scrollToSection(link.id); }}
                 className={`block px-4 py-3 rounded-xl text-sm font-bold tracking-tight uppercase transition-colors ${
                   activeSection === link.id
                     ? 'bg-primary-container/20 text-primary border-l-4 border-primary-container'

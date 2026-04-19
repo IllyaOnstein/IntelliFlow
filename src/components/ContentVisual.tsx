@@ -1,12 +1,23 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
+import DarkVeil from './DarkVeil';
 
 export default function ContentVisual() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-32 border-t border-outline-variant/10" id="architecture">
-      <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+    <section className="relative py-32 border-t border-outline-variant/10 overflow-hidden" id="architecture">
+      {/* DarkVeil Background */}
+      <div className="absolute inset-0 z-0 opacity-40 mix-blend-screen pointer-events-none" style={{ maskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)' }}>
+        <DarkVeil
+          hueShift={242}
+          noiseIntensity={0.2}
+          speed={3}
+          warpAmount={5}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}

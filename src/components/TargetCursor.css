@@ -1,0 +1,63 @@
+.target-cursor-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  /* Ensure cursor is hidden */
+  cursor: none !important;
+}
+
+.target-cursor-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: white !important;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  /* Increased glow */
+  box-shadow: 0 0 15px 4px rgba(255, 255, 255, 0.9) !important;
+}
+
+.target-cursor-corner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  /* Force corners to white */
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+  will-change: transform;
+  box-shadow: 0 0 8px 1px rgba(255, 255, 255, 0.4) !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.corner-tl {
+  transform: translate(-150%, -150%);
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-tr {
+  transform: translate(50%, -150%);
+  border-left: none;
+  border-bottom: none;
+}
+
+.corner-br {
+  transform: translate(50%, 50%);
+  border-left: none;
+  border-top: none;
+}
+
+.corner-bl {
+  transform: translate(-150%, 50%);
+  border-right: none;
+  border-top: none;
+}

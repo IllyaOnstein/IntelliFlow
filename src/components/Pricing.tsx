@@ -6,6 +6,9 @@ import ProQuotaModal from './ProQuotaModal';
 import LaunchNotifyModal from './LaunchNotifyModal';
 import RoadmapModal from './RoadmapModal';
 import { useModals } from '../contexts/ModalContext';
+import SoftAurora from './SoftAurora';
+import Silk from './Silk';
+import ElectricBorder from './ElectricBorder';
 
 export default function Pricing() {
   const [activeTab, setActiveTab] = useState<'individual' | 'enterprise'>('individual');
@@ -22,8 +25,16 @@ export default function Pricing() {
   };
 
   return (
-    <section className="max-w-[1200px] mx-auto px-8 py-20 relative" id="pricing">
-      {/* Free Plan Toast */}
+    <section className="relative w-full py-20" id="pricing">
+      {/* Silk Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 overflow-hidden">
+        <Silk speed={5} scale={1} color="#7B7481" noiseIntensity={1.5} rotation={0} />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#131313]/50 to-[#131313]"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#131313] via-transparent to-[#131313]"></div>
+      </div>
+
+      <div className="max-w-[1200px] mx-auto px-8 relative z-10">
+        {/* Free Plan Toast */}
       <AnimatePresence>
         {showFreeToast && (
           <motion.div
@@ -121,51 +132,60 @@ export default function Pricing() {
               {/* Paid Tier */}
               <div className="relative group h-full">
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary-container to-on-primary-fixed-variant rounded-xl blur-xl opacity-40 group-hover:opacity-60 transition duration-500"></div>
-                <div className="relative bg-surface-container-highest rounded-xl p-10 border border-primary-container/30 crimson-glow h-full flex flex-col">
-                  <div className="absolute -top-4 right-8 bg-primary-container text-white text-[10px] font-label font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-xl">
-                    {t('pricing.pro.popular')}
-                  </div>
-                  <div className="flex justify-between items-start mb-8">
-                    <div>
-                      <div className="font-label text-xs font-bold uppercase tracking-[0.2em] text-primary mb-2">{t('pricing.pro.badge')}</div>
-                      <h3 className="text-3xl font-black text-white">{t('pricing.pro.title')}</h3>
+                <ElectricBorder
+                  color="#ff4d4d"
+                  speed={1.5}
+                  chaos={0.15}
+                  borderRadius={12}
+                  className="h-full"
+                  style={{ borderRadius: '12px' }}
+                >
+                  <div className="relative bg-surface-container-highest rounded-xl p-10 h-full flex flex-col">
+                    <div className="absolute -top-4 right-8 bg-primary-container text-white text-[10px] font-label font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-xl">
+                      {t('pricing.pro.popular')}
                     </div>
-                    <div className="p-3 bg-primary-container/20 rounded-lg">
-                      <span className="material-symbols-outlined text-4xl text-primary" style={{ fontVariationSettings: '"FILL" 1' }}>terminal</span>
+                    <div className="flex justify-between items-start mb-8">
+                      <div>
+                        <div className="font-label text-xs font-bold uppercase tracking-[0.2em] text-primary mb-2">{t('pricing.pro.badge')}</div>
+                        <h3 className="text-3xl font-black text-white">{t('pricing.pro.title')}</h3>
+                      </div>
+                      <div className="p-3 bg-primary-container/20 rounded-lg">
+                        <span className="material-symbols-outlined text-4xl text-primary" style={{ fontVariationSettings: '"FILL" 1' }}>terminal</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="mb-8">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-5xl font-black text-white" translate="no">{t('pricing.pro.price')}</span>
-                      <span className="text-on-surface-variant font-label text-sm uppercase tracking-widest">{t('pricing.pro.period')}</span>
+                    <div className="mb-8">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-5xl font-black text-white" translate="no">{t('pricing.pro.price')}</span>
+                        <span className="text-on-surface-variant font-label text-sm uppercase tracking-widest">{t('pricing.pro.period')}</span>
+                      </div>
+                      <p className="text-primary text-xs font-bold mt-2 uppercase tracking-widest">{t('pricing.pro.limit')}</p>
                     </div>
-                    <p className="text-primary text-xs font-bold mt-2 uppercase tracking-widest">{t('pricing.pro.limit')}</p>
+                    <ul className="space-y-4 mb-12 flex-grow">
+                      <li className="flex items-center gap-3 text-white">
+                        <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: '"FILL" 1' }}>verified</span>
+                        <span className="text-sm font-bold">{t('pricing.pro.feat1')}</span>
+                      </li>
+                      <li className="flex items-center gap-3 text-white">
+                        <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: '"FILL" 1' }}>verified</span>
+                        <span className="text-sm font-bold">{t('pricing.pro.feat2')}</span>
+                      </li>
+                      <li className="flex items-center gap-3 text-white">
+                        <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: '"FILL" 1' }}>verified</span>
+                        <span className="text-sm font-bold">{t('pricing.pro.feat3')}</span>
+                      </li>
+                      <li className="flex items-center gap-3 text-white">
+                        <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: '"FILL" 1' }}>verified</span>
+                        <span className="text-sm font-bold">{t('pricing.pro.feat4')}</span>
+                      </li>
+                    </ul>
+                    <button 
+                      onClick={() => setIsProModalOpen(true)}
+                      className="w-full py-5 rounded-xl bg-primary-container text-white font-label font-bold uppercase tracking-widest hover:bg-on-primary-fixed-variant transition-all duration-300 shadow-xl active:scale-95 flex items-center justify-center gap-2"
+                    >
+                      {t('pricing.pro.btn')} <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                    </button>
                   </div>
-                  <ul className="space-y-4 mb-12 flex-grow">
-                    <li className="flex items-center gap-3 text-white">
-                      <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: '"FILL" 1' }}>verified</span>
-                      <span className="text-sm font-bold">{t('pricing.pro.feat1')}</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-white">
-                      <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: '"FILL" 1' }}>verified</span>
-                      <span className="text-sm font-bold">{t('pricing.pro.feat2')}</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-white">
-                      <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: '"FILL" 1' }}>verified</span>
-                      <span className="text-sm font-bold">{t('pricing.pro.feat3')}</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-white">
-                      <span className="material-symbols-outlined text-primary text-xl" style={{ fontVariationSettings: '"FILL" 1' }}>verified</span>
-                      <span className="text-sm font-bold">{t('pricing.pro.feat4')}</span>
-                    </li>
-                  </ul>
-                  <button 
-                    onClick={() => setIsProModalOpen(true)}
-                    className="w-full py-5 rounded-xl bg-primary-container text-white font-label font-bold uppercase tracking-widest hover:bg-on-primary-fixed-variant transition-all duration-300 shadow-xl active:scale-95 flex items-center justify-center gap-2"
-                  >
-                    {t('pricing.pro.btn')} <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                  </button>
-                </div>
+                </ElectricBorder>
               </div>
             </motion.div>
           ) : (
@@ -246,47 +266,56 @@ export default function Pricing() {
               {/* Enterprise Private */}
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-b from-primary-container to-transparent rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-                <div className="relative glass-panel p-10 rounded-3xl flex flex-col bg-surface-container-highest border border-primary-container/30 h-full scale-105 z-10 crimson-glow">
-                  <div className="absolute top-4 right-8">
-                    <span className="bg-primary-container text-white text-[10px] font-label px-3 py-1 rounded-full uppercase tracking-widest">{t('pricing.ent.private.rec')}</span>
+                <ElectricBorder
+                  color="#8a5cff"
+                  speed={0.8}
+                  chaos={0.15}
+                  borderRadius={24}
+                  className="h-full"
+                  style={{ borderRadius: '24px' }}
+                >
+                  <div className="relative glass-panel p-10 rounded-3xl flex flex-col bg-surface-container-highest h-full scale-105 z-10 crimson-glow">
+                    <div className="absolute top-4 right-8">
+                      <span className="bg-primary-container text-white text-[10px] font-label px-3 py-1 rounded-full uppercase tracking-widest">{t('pricing.ent.private.rec')}</span>
+                    </div>
+                    <span className="font-label text-xs uppercase tracking-widest text-primary mb-4">{t('pricing.ent.private.badge')}</span>
+                    <h3 className="font-headline font-bold text-3xl text-white mb-2">{t('pricing.ent.private.title')}</h3>
+                    <div className="flex items-baseline mb-8">
+                      <span className="text-4xl font-black text-white" translate="no">{t('pricing.ent.private.price')}</span>
+                      <span className="text-on-surface-variant ml-2">{t('pricing.ent.private.period')}</span>
+                    </div>
+                    <p className="text-on-surface-variant text-sm leading-relaxed mb-8 h-12">
+                      {t('pricing.ent.private.desc')}
+                    </p>
+                    <ul className="space-y-4 mb-10 flex-grow">
+                      <li className="flex items-center text-sm text-white">
+                        <span className="material-symbols-outlined text-primary mr-3 text-lg">verified_user</span>
+                        {t('pricing.ent.private.feat1')}
+                      </li>
+                      <li className="flex items-center text-sm text-white">
+                        <span className="material-symbols-outlined text-primary mr-3 text-lg">verified_user</span>
+                        {t('pricing.ent.private.feat2')}
+                      </li>
+                      <li className="flex items-center text-sm text-white">
+                        <span className="material-symbols-outlined text-primary mr-3 text-lg">verified_user</span>
+                        {t('pricing.ent.private.feat3')}
+                      </li>
+                      <li className="flex items-center text-sm text-white">
+                        <span className="material-symbols-outlined text-primary mr-3 text-lg">verified_user</span>
+                        {t('pricing.ent.private.feat4')}
+                      </li>
+                    </ul>
+                    <motion.button 
+                      whileTap={{ x: [0, -5, 5, -5, 5, 0] }}
+                      className="w-full py-4 rounded-xl border border-[#4B5563] text-on-surface-variant/70 font-label font-bold uppercase tracking-wider hover:bg-white/5 hover:border-blue-400/30 hover:text-blue-200 hover:shadow-[0_0_15px_rgba(96,165,250,0.15)] transition-all flex items-center justify-center gap-2"
+                    >
+                      <Lock className="w-4 h-4" /> {t('pricing.ent.private.btn')}
+                    </motion.button>
+                    <p className="mt-4 text-[10px] text-on-surface-variant/50 leading-relaxed text-center">
+                      {t('pricing.ent.private.note')}
+                    </p>
                   </div>
-                  <span className="font-label text-xs uppercase tracking-widest text-primary mb-4">{t('pricing.ent.private.badge')}</span>
-                  <h3 className="font-headline font-bold text-3xl text-white mb-2">{t('pricing.ent.private.title')}</h3>
-                  <div className="flex items-baseline mb-8">
-                    <span className="text-4xl font-black text-white" translate="no">{t('pricing.ent.private.price')}</span>
-                    <span className="text-on-surface-variant ml-2">{t('pricing.ent.private.period')}</span>
-                  </div>
-                  <p className="text-on-surface-variant text-sm leading-relaxed mb-8 h-12">
-                    {t('pricing.ent.private.desc')}
-                  </p>
-                  <ul className="space-y-4 mb-10 flex-grow">
-                    <li className="flex items-center text-sm text-white">
-                      <span className="material-symbols-outlined text-primary mr-3 text-lg">verified_user</span>
-                      {t('pricing.ent.private.feat1')}
-                    </li>
-                    <li className="flex items-center text-sm text-white">
-                      <span className="material-symbols-outlined text-primary mr-3 text-lg">verified_user</span>
-                      {t('pricing.ent.private.feat2')}
-                    </li>
-                    <li className="flex items-center text-sm text-white">
-                      <span className="material-symbols-outlined text-primary mr-3 text-lg">verified_user</span>
-                      {t('pricing.ent.private.feat3')}
-                    </li>
-                    <li className="flex items-center text-sm text-white">
-                      <span className="material-symbols-outlined text-primary mr-3 text-lg">verified_user</span>
-                      {t('pricing.ent.private.feat4')}
-                    </li>
-                  </ul>
-                  <motion.button 
-                    whileTap={{ x: [0, -5, 5, -5, 5, 0] }}
-                    className="w-full py-4 rounded-xl border border-[#4B5563] text-on-surface-variant/70 font-label font-bold uppercase tracking-wider hover:bg-white/5 hover:border-blue-400/30 hover:text-blue-200 hover:shadow-[0_0_15px_rgba(96,165,250,0.15)] transition-all flex items-center justify-center gap-2"
-                  >
-                    <Lock className="w-4 h-4" /> {t('pricing.ent.private.btn')}
-                  </motion.button>
-                  <p className="mt-4 text-[10px] text-on-surface-variant/50 leading-relaxed text-center">
-                    {t('pricing.ent.private.note')}
-                  </p>
-                </div>
+                </ElectricBorder>
               </div>
             </motion.div>
           )}
@@ -370,33 +399,54 @@ export default function Pricing() {
       </motion.div>
 
       {/* CTA Section */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 }}
-        className="max-w-5xl mx-auto text-center mb-32"
-      >
-        <h2 className="font-headline font-black text-4xl mb-6">{t('pricing.cta.title')}</h2>
-        <p className="text-on-surface-variant mb-12 text-lg">{t('pricing.cta.desc')}</p>
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-          <button 
-            onClick={() => openWaitlistModal(t('waitlist.pro.title'))}
-            className="bg-primary-container text-white px-10 py-5 rounded-xl font-bold uppercase tracking-wider text-sm hover:bg-on-primary-fixed-variant transition-all shadow-[0_20px_40px_-10px_rgba(139,0,0,0.5)] hover:scale-105 active:scale-95"
-          >
-            {t('pricing.cta.btn1')}
-          </button>
-          <a 
-            href={language === 'zh' 
-              ? "mailto:onsteinillya@gmail.com?subject=[IntelliFlow 产学研探讨] 架构评估与场景落地交流&body=你好：%0D%0A%0D%0A我看了 IntelliFlow 的官网演示，对系统中的 DAG 逆向推导架构与防 Prompt 注入沙箱非常感兴趣。%0D%0A%0D%0A希望能进一步了解该系统在高校教务自动化场景中的技术细节。请回复邮件沟通。"
-              : "mailto:onsteinillya@gmail.com?subject=[IntelliFlow Academic-Industry Collaboration] Architecture Evaluation & Scenario Implementation&body=Hello,%0D%0A%0D%0AI watched the IntelliFlow official demo and am very interested in the DAG reverse inference architecture and anti-prompt injection sandbox.%0D%0A%0D%0AI hope to learn more about the technical details of this system in the context of university administrative automation. Please reply to discuss further."
-            }
-            className="border border-outline-variant text-on-surface-variant px-10 py-5 rounded-xl font-bold uppercase tracking-wider text-sm hover:bg-surface-container-high hover:text-white transition-all hover:scale-105 active:scale-95 inline-block"
-          >
-            {t('pricing.cta.btn2')}
-          </a>
+      <div className="relative w-full overflow-hidden rounded-[2.5rem] py-24 mb-32 border border-outline-variant/10 shadow-2xl group">
+        <div className="absolute inset-0 z-0">
+          <SoftAurora
+            speed={0.6}
+            scale={1.5}
+            brightness={1.0}
+            color1="#ff5c7a"
+            color2="#8a5cff"
+            noiseFrequency={2.5}
+            noiseAmplitude={1.0}
+            bandHeight={0.5}
+            bandSpread={1.0}
+            octaveDecay={0.1}
+            layerOffset={0}
+            colorSpeed={1.0}
+            enableMouseInteraction={true}
+            mouseInfluence={0.25}
+          />
         </div>
-      </motion.div>
+        <div className="absolute inset-0 bg-black/40 mix-blend-overlay z-0"></div>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="relative z-10 max-w-5xl mx-auto text-center px-8"
+        >
+          <h2 className="font-headline font-black text-4xl mb-6 text-white drop-shadow-md">{t('pricing.cta.title')}</h2>
+          <p className="text-white/80 mb-12 text-lg drop-shadow-sm font-medium">{t('pricing.cta.desc')}</p>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <button 
+              onClick={() => openWaitlistModal(t('waitlist.pro.title'))}
+              className="bg-white text-black px-10 py-5 rounded-xl font-bold uppercase tracking-wider text-sm hover:bg-surface-container-highest hover:text-white transition-all shadow-[0_20px_40px_-10px_rgba(255,255,255,0.2)] hover:scale-105 active:scale-95 border border-white/20"
+            >
+              {t('pricing.cta.btn1')}
+            </button>
+            <a 
+              href={language === 'zh' 
+                ? "mailto:onsteinillya@gmail.com?subject=[IntelliFlow 产学研探讨] 架构评估与场景落地交流&body=你好：%0D%0A%0D%0A我看了 IntelliFlow 的官网演示，对系统中的 DAG 逆向推导架构与防 Prompt 注入沙箱非常感兴趣。%0D%0A%0D%0A希望能进一步了解该系统在高校教务自动化场景中的技术细节。请回复邮件沟通。"
+                : "mailto:onsteinillya@gmail.com?subject=[IntelliFlow Academic-Industry Collaboration] Architecture Evaluation & Scenario Implementation&body=Hello,%0D%0A%0D%0AI watched the IntelliFlow official demo and am very interested in the DAG reverse inference architecture and anti-prompt injection sandbox.%0D%0A%0D%0AI hope to learn more about the technical details of this system in the context of university administrative automation. Please reply to discuss further."
+              }
+              className="bg-black/30 backdrop-blur-md border border-white/20 text-white px-10 py-5 rounded-xl font-bold uppercase tracking-wider text-sm hover:bg-white/10 transition-all hover:scale-105 active:scale-95 inline-block"
+            >
+              {t('pricing.cta.btn2')}
+            </a>
+          </div>
+        </motion.div>
+      </div>
 
       {/* Trusted By */}
       <div className="pt-20 border-t border-outline-variant/10 overflow-hidden">
@@ -465,6 +515,8 @@ export default function Pricing() {
             </div>
           </motion.div>
         </motion.div>
+      </div>
+
       </div>
 
       <ProQuotaModal 

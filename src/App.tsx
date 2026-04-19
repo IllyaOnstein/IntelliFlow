@@ -19,6 +19,9 @@ import Footer from './components/Footer';
 import Docs from './pages/Docs';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ModalProvider, useModals } from './contexts/ModalContext';
+import TargetCursor from './components/TargetCursor';
+import ClickSpark from './components/ClickSpark';
+import SplashCursor from './components/SplashCursor';
 import LoginModal from './components/LoginModal';
 import WaitlistModal from './components/WaitlistModal';
 import StealthModal from './components/StealthModal';
@@ -59,12 +62,16 @@ function Home() {
       <ContentVisual />
       <CoreCapabilities />
       <Alignment />
-      <Safety />
       <Vision />
       <Pricing />
     </motion.main>
   );
 }
+
+import LuxuryLanding from './pages/LuxuryLanding';
+// ... existing imports
+
+// ...
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -72,6 +79,7 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
+        <Route path="/luxury" element={<LuxuryLanding />} />
         <Route path="/docs" element={
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -87,18 +95,23 @@ function AnimatedRoutes() {
   );
 }
 
+
 export default function App() {
   return (
     <LanguageProvider>
       <ModalProvider>
-        <BrowserRouter>
-          <div className="min-h-screen bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary">
-            <Navbar />
-            <AnimatedRoutes />
-            <Footer />
-            <GlobalModals />
-          </div>
-        </BrowserRouter>
+        <TargetCursor />
+        <SplashCursor />
+        <ClickSpark sparkColor="#ffb4a8" sparkSize={20} sparkRadius={40} sparkCount={16} duration={600}>
+          <BrowserRouter>
+            <div className="min-h-screen bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary">
+              <Navbar />
+              <AnimatedRoutes />
+              <Footer />
+              <GlobalModals />
+            </div>
+          </BrowserRouter>
+        </ClickSpark>
       </ModalProvider>
     </LanguageProvider>
   );

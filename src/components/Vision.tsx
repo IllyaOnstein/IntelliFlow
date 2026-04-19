@@ -3,6 +3,9 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useState, useEffect } from 'react';
 import { Lock } from 'lucide-react';
 import CommunityWaitlistModal from './CommunityWaitlistModal';
+import Particles from './Particles';
+import PrismaticBurst from './PrismaticBurst';
+import Radar from './Radar';
 
 export default function Vision() {
   const { t } = useLanguage();
@@ -21,7 +24,38 @@ export default function Vision() {
   return (
     <div id="vision" className="relative bg-[radial-gradient(circle,#353535_1px,transparent_1px)] bg-[length:40px_40px]">
       {/* Hero Section: The Mission */}
-      <section className="max-w-7xl mx-auto px-8 py-32 flex flex-col md:flex-row items-center gap-16">
+      <div className="relative w-full overflow-hidden min-h-[90vh] flex items-center">
+        {/* PrismaticBurst Dynamic Background for the hero section */}
+        <div className="absolute inset-0 z-0 opacity-100 pointer-events-none" style={{ maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)' }}>
+          <PrismaticBurst
+            animationType="rotate3d"
+            intensity={4}
+            speed={0.4}
+            distort={1.5}
+            paused={false}
+            offset={{ x: 0, y: 0 }}
+            hoverDampness={0.25}
+            rayCount={24}
+            mixBlendMode="screen"
+            colors={['#ffffff', '#ffb4a8', '#ff5c7a', '#a60000']}
+          />
+        </div>
+
+        {/* Particles Overlay */}
+        <div className="absolute inset-0 z-0 opacity-30">
+          <Particles
+            particleColors={["#ffffff", "#ff5c7a"]}
+            particleCount={200}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover={true}
+            alphaParticles={true}
+            disableRotation={false}
+          />
+        </div>
+
+        <section className="max-w-7xl mx-auto w-full px-8 py-32 flex flex-col md:flex-row items-center gap-16 relative z-10">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -70,9 +104,10 @@ export default function Vision() {
           </div>
         </motion.div>
       </section>
+      </div>
 
       {/* Vision Bento Grid */}
-      <section className="bg-surface-container-lowest/90 backdrop-blur-sm py-32 border-y border-outline-variant/10">
+      <section className="bg-surface-container-lowest/90 backdrop-blur-sm py-32 border-y border-outline-variant/10 relative z-10">
         <div className="max-w-7xl mx-auto px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -92,22 +127,44 @@ export default function Vision() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
-              className="md:col-span-2 bg-[#353535]/40 backdrop-blur-[40px] p-10 rounded-2xl border border-outline-variant/10 flex flex-col justify-between group hover:border-primary-container/30 transition-colors"
+              className="md:col-span-2 bg-[#120F17] backdrop-blur-[40px] p-10 rounded-2xl border border-outline-variant/10 flex flex-col justify-between group hover:border-primary-container/30 transition-colors relative overflow-hidden"
             >
-              <div>
+              {/* Radar Background */}
+              <div className="absolute inset-0 z-0">
+                <Radar
+                  speed={1.0}
+                  scale={0.5}
+                  ringCount={10}
+                  spokeCount={10}
+                  ringThickness={0.05}
+                  spokeThickness={0.01}
+                  sweepSpeed={1.0}
+                  sweepWidth={2.0}
+                  sweepLobes={1}
+                  color="#ff2929"
+                  backgroundColor="#580101"
+                  falloff={2.0}
+                  brightness={1.0}
+                  enableMouseInteraction={true}
+                  mouseInfluence={0.1}
+                />
+                <div className="absolute inset-0 bg-[#120F17]/80 backdrop-blur-[2px]"></div>
+              </div>
+
+              <div className="relative z-10">
                 <div className="flex justify-between items-start mb-12">
                   <span className="font-label text-[10px] bg-primary-container text-white px-3 py-1 rounded-full uppercase tracking-widest">{t('vision.roadmap.q3q4.badge')}</span>
-                  <span className="text-5xl font-black text-white/5 group-hover:text-primary-container/20 transition-colors">Q3-Q4</span>
+                  <span className="text-5xl font-black text-white/10 group-hover:text-primary-container/20 transition-colors">Q3-Q4</span>
                 </div>
                 <h3 className="text-3xl font-bold mb-4">{t('vision.roadmap.q3q4.title')}</h3>
                 <p className="text-on-surface-variant text-lg leading-relaxed mb-8">
                   {t('vision.roadmap.q3q4.desc1')}<span className="font-bold text-on-surface">{t('vision.roadmap.q3q4.desc2')}</span>{t('vision.roadmap.q3q4.desc3')}
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 rounded-md bg-surface-container-highest text-[10px] font-label text-on-surface-variant uppercase">{t('vision.roadmap.q3q4.tag1')}</span>
-                <span className="px-3 py-1 rounded-md bg-surface-container-highest text-[10px] font-label text-on-surface-variant uppercase">{t('vision.roadmap.q3q4.tag2')}</span>
-                <span className="px-3 py-1 rounded-md bg-surface-container-highest text-[10px] font-label text-on-surface-variant uppercase">{t('vision.roadmap.q3q4.tag3')}</span>
+              <div className="flex flex-wrap gap-2 relative z-10">
+                <span className="px-3 py-1 rounded-md bg-[#222] text-[10px] font-label text-on-surface-variant uppercase">{t('vision.roadmap.q3q4.tag1')}</span>
+                <span className="px-3 py-1 rounded-md bg-[#222] text-[10px] font-label text-on-surface-variant uppercase">{t('vision.roadmap.q3q4.tag2')}</span>
+                <span className="px-3 py-1 rounded-md bg-[#222] text-[10px] font-label text-on-surface-variant uppercase">{t('vision.roadmap.q3q4.tag3')}</span>
               </div>
             </motion.div>
 
@@ -173,7 +230,7 @@ export default function Vision() {
       </section>
 
       {/* Ecosystem Section */}
-      <section className="max-w-[1440px] mx-auto px-6 md:px-12 py-32 border-t border-outline-variant/10">
+      <section className="max-w-[1440px] mx-auto px-6 md:px-12 py-32 border-t border-outline-variant/10 relative z-10">
         {/* Hero Header */}
         <motion.header 
           initial={{ opacity: 0, y: 20 }}
@@ -362,7 +419,7 @@ export default function Vision() {
       </section>
 
       {/* Quote Section */}
-      <section className="max-w-5xl mx-auto px-8 py-48 text-center">
+      <section className="max-w-5xl mx-auto px-8 py-48 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}

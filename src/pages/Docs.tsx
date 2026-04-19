@@ -8,6 +8,9 @@ import {
   Cpu, Network, Users, Zap, AlertTriangle, Menu, X,
   FileSpreadsheet, FileSearch, ArrowRight, Activity, Globe, ArrowLeft
 } from 'lucide-react';
+import LiquidChrome from '../components/LiquidChrome';
+import BorderGlow from '../components/BorderGlow';
+import TextType from '../components/TextType';
 
 export default function Docs() {
   const { language } = useLanguage();
@@ -62,11 +65,19 @@ export default function Docs() {
   const isZh = language === 'zh';
 
   return (
-    <div className="min-h-screen pt-24 pb-20 bg-background relative">
+    <div className="min-h-screen pt-24 pb-20 bg-black relative">
       {/* Background Effects */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen">
+        <LiquidChrome
+          baseColor={[0.1, 0.1, 0.1]}
+          speed={1}
+          amplitude={0.6}
+          interactive={true}
+        />
+      </div>
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-[#8b0000]/5 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-0 right-1/4 w-1/2 h-1/2 bg-primary/5 blur-[120px] rounded-full"></div>
+        <div className="absolute top-0 left-1/4 w-1/2 h-1/2 bg-[#8b0000]/10 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-0 right-1/4 w-1/2 h-1/2 bg-primary/10 blur-[120px] rounded-full"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex items-start gap-12">
@@ -82,11 +93,11 @@ export default function Docs() {
         {/* Sidebar Navigation */}
         <aside className={`
           fixed lg:sticky top-24 left-0 h-[calc(100vh-8rem)] w-72 flex-shrink-0 
-          bg-[#131313]/95 lg:bg-transparent backdrop-blur-xl lg:backdrop-blur-none
-          border-r border-outline-variant/10 lg:border-none z-40
+          bg-black/60 lg:bg-black/20 backdrop-blur-xl
+          border-r border-white/5 lg:border-white/5 lg:rounded-2xl z-40
           transition-transform duration-300 ease-in-out
           ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          overflow-y-auto custom-scrollbar p-6 lg:p-0
+          overflow-y-auto custom-scrollbar p-6
         `}>
           <div className="mb-8 lg:hidden flex items-center gap-2 text-primary">
             <Activity className="w-6 h-6 stroke-[3]" />
@@ -132,7 +143,11 @@ export default function Docs() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-headline font-black text-white mb-8 tracking-tight">
-              {isZh ? '什么是 IntelliFlow？' : 'What is IntelliFlow?'}
+              <TextType 
+                text={[isZh ? '什么是 IntelliFlow？' : 'What is IntelliFlow?']}
+                typingSpeed={100}
+                showCursor={false}
+              />
             </h1>
             <p className="text-lg text-on-surface-variant leading-relaxed mb-6">
               {isZh 
@@ -154,39 +169,45 @@ export default function Docs() {
             </p>
 
             <div className="space-y-6 mb-12">
-              <div className="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/10 hover:border-primary/30 transition-colors">
-                <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-xs">1</span>
-                  {isZh ? '意图输入' : 'Intent Input'}
-                </h3>
-                <p className="text-on-surface-variant text-sm leading-relaxed">
-                  {isZh 
-                    ? '在极具科技感的双文件拖拽入口中，上传您的“错乱原文件”与“期望输出的Excel 基准”，并输入如“提取所有国家级奖项并计算总分”的提示词。' 
-                    : 'In the highly technical dual-file drag-and-drop portal, upload your "messy raw file" and "expected Excel benchmark", and enter a prompt like "Extract all national-level awards and calculate the total score".'}
-                </p>
-              </div>
-              <div className="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/10 hover:border-primary/30 transition-colors">
-                <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-xs">2</span>
-                  {isZh ? '流水线生成' : 'Pipeline Generation'}
-                </h3>
-                <p className="text-on-surface-variant text-sm leading-relaxed">
-                  {isZh 
-                    ? '底层的逆向推导算法会自动将黑盒逻辑白盒化，在暗黑主题的画布中为您生成经典的节点连线图（DAG）。' 
-                    : 'The underlying reverse-engineering algorithm automatically white-boxes the black-box logic, generating a classic Directed Acyclic Graph (DAG) for you in the dark-themed canvas.'}
-                </p>
-              </div>
-              <div className="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/10 hover:border-primary/30 transition-colors">
-                <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                  <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-xs">3</span>
-                  {isZh ? '上传与执行' : 'Upload & Execute'}
-                </h3>
-                <p className="text-on-surface-variant text-sm leading-relaxed">
-                  {isZh 
-                    ? '在左侧资产库的资源目录中，上传一份待处理的全新学生资料（如Raw_Students_Q1.xlsx），点击测试运行。您将看到数据从左至右流经各个算子，最终由右侧的导出接收器输出为您所需的标准汇总报表。' 
-                    : 'In the resource directory of the left asset library, upload a new student profile to be processed (e.g., Raw_Students_Q1.xlsx) and click test run. You will see data flow from left to right through various operators, ultimately outputting your required standard summary report via the export receiver on the right.'}
-                </p>
-              </div>
+              <BorderGlow className="hover:border-primary/50 transition-colors">
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-xs">1</span>
+                    {isZh ? '意图输入' : 'Intent Input'}
+                  </h3>
+                  <p className="text-on-surface-variant text-sm leading-relaxed">
+                    {isZh 
+                      ? '在极具科技感的双文件拖拽入口中，上传您的“错乱原文件”与“期望输出的Excel 基准”，并输入如“提取所有国家级奖项并计算总分”的提示词。' 
+                      : 'In the highly technical dual-file drag-and-drop portal, upload your "messy raw file" and "expected Excel benchmark", and enter a prompt like "Extract all national-level awards and calculate the total score".'}
+                  </p>
+                </div>
+              </BorderGlow>
+              <BorderGlow className="hover:border-primary/50 transition-colors">
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-xs">2</span>
+                    {isZh ? '流水线生成' : 'Pipeline Generation'}
+                  </h3>
+                  <p className="text-on-surface-variant text-sm leading-relaxed">
+                    {isZh 
+                      ? '底层的逆向推导算法会自动将黑盒逻辑白盒化，在暗黑主题的画布中为您生成经典的节点连线图（DAG）。' 
+                      : 'The underlying reverse-engineering algorithm automatically white-boxes the black-box logic, generating a classic Directed Acyclic Graph (DAG) for you in the dark-themed canvas.'}
+                  </p>
+                </div>
+              </BorderGlow>
+              <BorderGlow className="hover:border-primary/50 transition-colors">
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/20 text-primary text-xs">3</span>
+                    {isZh ? '上传与执行' : 'Upload & Execute'}
+                  </h3>
+                  <p className="text-on-surface-variant text-sm leading-relaxed">
+                    {isZh 
+                      ? '在左侧资产库的资源目录中，上传一份待处理的全新学生资料（如Raw_Students_Q1.xlsx），点击测试运行。您将看到数据从左至右流经各个算子，最终由右侧的导出接收器输出为您所需的标准汇总报表。' 
+                      : 'In the resource directory of the left asset library, upload a new student profile to be processed (e.g., Raw_Students_Q1.xlsx) and click test run. You will see data flow from left to right through various operators, ultimately outputting your required standard summary report via the export receiver on the right.'}
+                  </p>
+                </div>
+              </BorderGlow>
             </div>
 
             {/* GIF Placeholder */}
@@ -215,7 +236,11 @@ export default function Docs() {
           <section id="core-concepts" className="scroll-mt-32 mb-24">
             <h2 className="text-3xl font-headline font-bold text-white mb-8 pb-4 border-b border-outline-variant/20 flex items-center gap-3">
               <Brain className="w-8 h-8 text-primary" />
-              {isZh ? '核心概念' : 'Core Concepts'}
+              <TextType 
+                text={[isZh ? '核心概念' : 'Core Concepts']}
+                typingSpeed={100}
+                showCursor={false}
+              />
             </h2>
             
             <div className="space-y-10">
@@ -237,7 +262,7 @@ export default function Docs() {
                 </p>
               </div>
 
-              <div className="bg-surface-container-low border border-outline-variant/10 rounded-2xl p-6">
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6">
                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <Users className="w-5 h-5 text-tertiary" />
                   {isZh ? '工作空间与社区 (Workspaces & Community)' : 'Workspaces & Community'}
@@ -284,75 +309,82 @@ export default function Docs() {
             </p>
 
             <div className="grid gap-6">
+
               {/* Group 1 */}
-              <div className="glass-panel bg-surface-container-low/50 border border-outline-variant/20 p-6 rounded-2xl">
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <Database className="w-5 h-5 text-blue-400" />
-                  {isZh ? '📦 数据采集与解析组' : '📦 Data Collection & Parsing Group'}
-                </h3>
-                <div className="space-y-4">
-                  <div className="bg-[#131313] p-4 rounded-xl border border-outline-variant/10">
-                    <strong className="text-white block mb-2">{isZh ? '多模态OCR / PDF 路由器' : 'Multimodal OCR / PDF Router'}</strong>
-                    <p className="text-sm text-on-surface-variant">
-                      {isZh 
-                        ? '输入为极度复杂的扫描件，底层调用强大视觉多模态大模型，输出剥离后的原始文本和元数据流。' 
-                        : 'Input is extremely complex scanned documents, underlying calls to powerful visual multimodal large models, outputting stripped raw text and metadata streams.'}
-                    </p>
-                  </div>
-                  <div className="bg-[#131313] p-4 rounded-xl border border-outline-variant/10">
-                    <strong className="text-white block mb-2">{isZh ? 'EXCEL 阅读器' : 'EXCEL Reader'}</strong>
-                    <p className="text-sm text-on-surface-variant">
-                      {isZh ? '针对.xlsx文件进行原生预处理与表头提取。' : 'Native preprocessing and header extraction for .xlsx files.'}
-                    </p>
+              <BorderGlow>
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <Database className="w-5 h-5 text-blue-400" />
+                    {isZh ? '📦 数据采集与解析组' : '📦 Data Collection & Parsing Group'}
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="bg-black/40 p-4 rounded-xl border border-white/5">
+                      <strong className="text-white block mb-2">{isZh ? '多模态OCR / PDF 路由器' : 'Multimodal OCR / PDF Router'}</strong>
+                      <p className="text-sm text-on-surface-variant">
+                        {isZh 
+                          ? '输入为极度复杂的扫描件，底层调用强大视觉多模态大模型，输出剥离后的原始文本和元数据流。' 
+                          : 'Input is extremely complex scanned documents, underlying calls to powerful visual multimodal large models, outputting stripped raw text and metadata streams.'}
+                      </p>
+                    </div>
+                    <div className="bg-black/40 p-4 rounded-xl border border-white/5">
+                      <strong className="text-white block mb-2">{isZh ? 'EXCEL 阅读器' : 'EXCEL Reader'}</strong>
+                      <p className="text-sm text-on-surface-variant">
+                        {isZh ? '针对.xlsx文件进行原生预处理与表头提取。' : 'Native preprocessing and header extraction for .xlsx files.'}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </BorderGlow>
 
               {/* Group 2 */}
-              <div className="glass-panel bg-surface-container-low/50 border border-primary/20 p-6 rounded-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[50px] rounded-full"></div>
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2 relative z-10">
-                  <Cpu className="w-5 h-5 text-primary" />
-                  {isZh ? '🧠 人工智能推理组' : '🧠 AI Inference Group'}
-                </h3>
-                <div className="space-y-4 relative z-10">
-                  <div className="bg-[#131313] p-4 rounded-xl border border-outline-variant/10">
-                    <strong className="text-white block mb-2">{isZh ? '分类器 / 摘要器' : 'Classifier / Summarizer'}</strong>
-                    <p className="text-sm text-on-surface-variant">
-                      {isZh 
-                        ? '输入上游清洗好的文本片段，内置动态路由分发机制，输出结构化的定级标签或特征实体（例如：判断该奖项置信度达 94.3%）。' 
-                        : 'Inputs upstream cleaned text snippets, built-in dynamic routing distribution mechanism, outputs structured grading labels or feature entities (e.g., determining the award confidence reaches 94.3%).'}
-                    </p>
-                  </div>
-                  <div className="bg-[#2a0808]/50 p-4 rounded-xl border border-[#8b0000]/30">
-                    <strong className="text-primary block mb-2 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4" />
-                      {isZh ? '⚠️ 异常熔断机制' : '⚠️ Anomaly Circuit Breaker'}
-                    </strong>
-                    <p className="text-sm text-on-surface-variant">
-                      {isZh 
-                        ? '如果置信度过低，将自动触发“置信度闸门”，打入异常池等待人工定点拦截与干预。' 
-                        : 'If confidence is too low, it automatically triggers the "Confidence Gate", entering the anomaly pool waiting for targeted manual interception and intervention.'}
-                    </p>
+              <BorderGlow>
+                <div className="p-6 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-[50px] rounded-full"></div>
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2 relative z-10">
+                    <Cpu className="w-5 h-5 text-primary" />
+                    {isZh ? '🧠 人工智能推理组' : '🧠 AI Inference Group'}
+                  </h3>
+                  <div className="space-y-4 relative z-10">
+                    <div className="bg-black/40 p-4 rounded-xl border border-white/5">
+                      <strong className="text-white block mb-2">{isZh ? '分类器 / 摘要器' : 'Classifier / Summarizer'}</strong>
+                      <p className="text-sm text-on-surface-variant">
+                        {isZh 
+                          ? '输入上游清洗好的文本片段，内置动态路由分发机制，输出结构化的定级标签或特征实体（例如：判断该奖项置信度达 94.3%）。' 
+                          : 'Inputs upstream cleaned text snippets, built-in dynamic routing distribution mechanism, outputs structured grading labels or feature entities (e.g., determining the award confidence reaches 94.3%).'}
+                      </p>
+                    </div>
+                    <div className="bg-[#8b0000]/20 p-4 rounded-xl border border-[#8b0000]/30 backdrop-blur-sm">
+                      <strong className="text-primary block mb-2 flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4" />
+                        {isZh ? '⚠️ 异常熔断机制' : '⚠️ Anomaly Circuit Breaker'}
+                      </strong>
+                      <p className="text-sm text-on-surface-variant">
+                        {isZh 
+                          ? '如果置信度过低，将自动触发“置信度闸门”，打入异常池等待人工定点拦截与干预。' 
+                          : 'If confidence is too low, it automatically triggers the "Confidence Gate", entering the anomaly pool waiting for targeted manual interception and intervention.'}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </BorderGlow>
 
               {/* Group 3 */}
-              <div className="glass-panel bg-surface-container-low/50 border border-outline-variant/20 p-6 rounded-2xl">
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <FileSpreadsheet className="w-5 h-5 text-green-400" />
-                  {isZh ? '⚙️ 导出与网关组' : '⚙️ Export & Gateway Group'}
-                </h3>
-                <div className="bg-[#131313] p-4 rounded-xl border border-outline-variant/10">
-                  <strong className="text-white block mb-2">{isZh ? '报告撰写员 (Report Writer)' : 'Report Writer'}</strong>
-                  <p className="text-sm text-on-surface-variant">
-                    {isZh 
-                      ? '工作流末端节点。通过右侧列映射规则面板，将上游解构的JSON 数据精准注入目标数据库表或输出文件（如映射至Column: B）。' 
-                      : 'The terminal node of the workflow. Through the right column mapping rule panel, it accurately injects upstream deconstructed JSON data into target database tables or output files (e.g., mapping to Column: B).'}
-                  </p>
+              <BorderGlow>
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <FileSpreadsheet className="w-5 h-5 text-green-400" />
+                    {isZh ? '⚙️ 导出与网关组' : '⚙️ Export & Gateway Group'}
+                  </h3>
+                  <div className="bg-black/40 p-4 rounded-xl border border-white/5">
+                    <strong className="text-white block mb-2">{isZh ? '报告撰写员 (Report Writer)' : 'Report Writer'}</strong>
+                    <p className="text-sm text-on-surface-variant">
+                      {isZh 
+                        ? '工作流末端节点。通过右侧列映射规则面板，将上游解构的JSON 数据精准注入目标数据库表或输出文件（如映射至Column: B）。' 
+                        : 'The terminal node of the workflow. Through the right column mapping rule panel, it accurately injects upstream deconstructed JSON data into target database tables or output files (e.g., mapping to Column: B).'}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </BorderGlow>
             </div>
           </section>
 
@@ -364,36 +396,40 @@ export default function Docs() {
             </h2>
 
             <div className="grid md:grid-cols-2 gap-6 mb-10">
-              <div className="bg-surface-container border border-outline-variant/10 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
-                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center mb-4">
-                  <FileText className="w-5 h-5 text-primary" />
+              <BorderGlow className="hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" backgroundColor="rgba(255, 255, 255, 0.05)">
+                <div className="p-6">
+                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center mb-4">
+                    <FileText className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-3">
+                    {isZh ? '案例一：高校奖学金量化规则解析' : 'Case 1: Scholarship Rule Parsing'}
+                  </h3>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">
+                    {isZh 
+                      ? '辅导员仅需将错综复杂的学生申报材料（Excel 报名表、Word 事迹、PDF 证书）投入自动化批量中心。一键应用“加分量化模板”，系统自动提取学号、识别奖项级别、剔除重复项并计算得分，彻底解放教务文书查验压力。' 
+                      : 'Counselors only need to drop intricate student application materials (Excel forms, Word deeds, PDF certificates) into the automated batch center. One-click apply the "Bonus Quantification Template", and the system automatically extracts student IDs, identifies award levels, removes duplicates, and calculates scores, completely liberating the pressure of academic document verification.'}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3">
-                  {isZh ? '案例一：高校奖学金量化规则解析' : 'Case 1: Scholarship Rule Parsing'}
-                </h3>
-                <p className="text-sm text-on-surface-variant leading-relaxed">
-                  {isZh 
-                    ? '辅导员仅需将错综复杂的学生申报材料（Excel 报名表、Word 事迹、PDF 证书）投入自动化批量中心。一键应用“加分量化模板”，系统自动提取学号、识别奖项级别、剔除重复项并计算得分，彻底解放教务文书查验压力。' 
-                    : 'Counselors only need to drop intricate student application materials (Excel forms, Word deeds, PDF certificates) into the automated batch center. One-click apply the "Bonus Quantification Template", and the system automatically extracts student IDs, identifies award levels, removes duplicates, and calculates scores, completely liberating the pressure of academic document verification.'}
-                </p>
-              </div>
+              </BorderGlow>
 
-              <div className="bg-surface-container border border-outline-variant/10 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
-                <div className="w-10 h-10 rounded-lg bg-tertiary/20 flex items-center justify-center mb-4">
-                  <FileSearch className="w-5 h-5 text-tertiary" />
+              <BorderGlow className="hover:border-primary/30 transition-all duration-300 hover:-translate-y-1" backgroundColor="rgba(255, 255, 255, 0.05)">
+                <div className="p-6">
+                  <div className="w-10 h-10 rounded-lg bg-tertiary/20 flex items-center justify-center mb-4">
+                    <FileSearch className="w-5 h-5 text-tertiary" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-3">
+                    {isZh ? '案例二：财务发票与企业级RPA' : 'Case 2: Financial Invoices & RPA'}
+                  </h3>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">
+                    {isZh 
+                      ? '在中后期千亿级RPA 市场，针对企业财务与法务合同要素提取。利用高速队列管道，系统可对数百份格式各异的发票并发执行监控，极大提升大型组织审核吞吐量。' 
+                      : 'In the mid-to-late stage hundred-billion-level RPA market, targeting enterprise financial and legal contract element extraction. Utilizing high-speed queue pipelines, the system can concurrently execute monitoring on hundreds of invoices in various formats, greatly increasing the audit throughput of large organizations.'}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3">
-                  {isZh ? '案例二：财务发票与企业级RPA' : 'Case 2: Financial Invoices & RPA'}
-                </h3>
-                <p className="text-sm text-on-surface-variant leading-relaxed">
-                  {isZh 
-                    ? '在中后期千亿级RPA 市场，针对企业财务与法务合同要素提取。利用高速队列管道，系统可对数百份格式各异的发票并发执行监控，极大提升大型组织审核吞吐量。' 
-                    : 'In the mid-to-late stage hundred-billion-level RPA market, targeting enterprise financial and legal contract element extraction. Utilizing high-speed queue pipelines, the system can concurrently execute monitoring on hundreds of invoices in various formats, greatly increasing the audit throughput of large organizations.'}
-                </p>
-              </div>
+              </BorderGlow>
             </div>
 
-            <div className="bg-[#131313] border border-outline-variant/20 rounded-2xl p-8 relative overflow-hidden">
+            <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-8 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-1 h-full bg-primary"></div>
               <h3 className="text-xl font-bold text-white mb-4">{isZh ? '提示词工程指南 (Prompt Engineering)' : 'Prompt Engineering Guide'}</h3>
               <p className="text-on-surface-variant mb-4">
@@ -441,7 +477,7 @@ export default function Docs() {
                 </p>
               </div>
 
-              <div className="bg-surface-container-low border border-primary/20 rounded-2xl p-6">
+              <div className="bg-white/5 backdrop-blur-md border border-primary/20 rounded-2xl p-6">
                 <h3 className="text-xl font-bold text-white mb-4 text-primary">
                   {isZh ? '数据隐私与沙箱安全（合规生命线）' : 'Data Privacy & Sandbox Security (Compliance Lifeline)'}
                 </h3>

@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useState, useEffect } from 'react';
 import WaitlistModal from './WaitlistModal';
+import GridScan from './GridScan';
+import Galaxy from './Galaxy';
 
 export default function CoreCapabilities() {
   const { t } = useLanguage();
@@ -18,9 +20,23 @@ export default function CoreCapabilities() {
   };
 
   return (
-    <div className="pt-32 pb-24 overflow-x-hidden" id="capabilities">
-      {/* Header Section */}
-      <header className="max-w-7xl mx-auto px-8 mb-32">
+    <div className="relative pt-32 pb-24 overflow-x-hidden bg-[#0A0A0A]" id="capabilities">
+      {/* Galaxy Background covering the whole capabilities section */}
+      <div className="absolute inset-0 z-0 opacity-80" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' }}>
+        <Galaxy 
+          mouseRepulsion={true}
+          mouseInteraction={true}
+          density={1.5}
+          glowIntensity={0.5}
+          saturation={0.8}
+          // Hue shift shifted towards deep red / industrial colors to match theme
+          hueShift={0} 
+        />
+      </div>
+
+      <div className="relative z-10">
+        {/* Header Section */}
+        <header className="max-w-7xl mx-auto px-8 mb-32">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -208,25 +224,49 @@ export default function CoreCapabilities() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
-            className="md:col-span-2 bg-gradient-to-br from-surface-container-high to-surface-container p-12 rounded-2xl outline outline-1 outline-outline-variant/15 relative overflow-hidden group"
+            className="md:col-span-2 bg-[#120F17] p-12 rounded-2xl outline outline-1 outline-outline-variant/15 relative overflow-hidden group border border-[#222]"
           >
-            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+            {/* GridScan Background */}
+            <div className="absolute inset-0 z-0 pointer-events-auto">
+              <div style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
+                <GridScan
+                  sensitivity={0.55}
+                  lineThickness={2}
+                  linesColor="#8B0000"
+                  gridScale={0.15}
+                  scanColor="#FF6B6B"
+                  scanOpacity={0.8}
+                  enablePost
+                  bloomIntensity={1.2}
+                  chromaticAberration={0.005}
+                  noiseIntensity={0.03}
+                  scanDuration={3.0}
+                  scanDelay={1.5}
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#120F17]/90 via-[#120F17]/50 to-transparent"></div>
+            </div>
+
+            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity z-10">
               <span className="material-symbols-outlined text-[160px]">rocket_launch</span>
             </div>
-            <h3 className="text-4xl font-black mb-4">{t('capabilities.cta.title')}</h3>
-            <p className="text-on-surface-variant max-w-md mb-8">{t('capabilities.cta.desc')}</p>
-            <button 
-              onClick={() => !hasApplied && setIsWaitlistOpen(true)}
-              disabled={hasApplied}
-              className={`px-8 py-4 rounded-xl font-bold uppercase tracking-tight flex items-center gap-2 transition-all duration-300 ${
-                hasApplied 
-                  ? 'bg-surface-container-highest text-on-surface-variant cursor-not-allowed border border-outline-variant/20'
-                  : 'bg-primary-container text-on-primary-container hover:scale-[1.05] hover:shadow-[0_0_30px_rgba(139,0,0,0.3)]'
-              }`}
-            >
-              {hasApplied ? t('capabilities.cta.btn.applied') : t('capabilities.cta.btn')} 
-              {!hasApplied && <span className="material-symbols-outlined">arrow_forward</span>}
-            </button>
+            
+            <div className="relative z-10">
+              <h3 className="text-4xl font-black mb-4">{t('capabilities.cta.title')}</h3>
+              <p className="text-on-surface-variant max-w-md mb-8">{t('capabilities.cta.desc')}</p>
+              <button 
+                onClick={() => !hasApplied && setIsWaitlistOpen(true)}
+                disabled={hasApplied}
+                className={`px-8 py-4 rounded-xl font-bold uppercase tracking-tight flex items-center gap-2 transition-all duration-300 ${
+                  hasApplied 
+                    ? 'bg-surface-container-highest text-on-surface-variant cursor-not-allowed border border-outline-variant/20'
+                    : 'bg-primary-container text-on-primary-container hover:scale-[1.05] hover:shadow-[0_0_30px_rgba(139,0,0,0.3)]'
+                }`}
+              >
+                {hasApplied ? t('capabilities.cta.btn.applied') : t('capabilities.cta.btn')} 
+                {!hasApplied && <span className="material-symbols-outlined">arrow_forward</span>}
+              </button>
+            </div>
           </motion.div>
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -251,6 +291,7 @@ export default function CoreCapabilities() {
         onClose={() => setIsWaitlistOpen(false)} 
         onSuccess={handleWaitlistSuccess}
       />
+      </div>{/* closes relative z-10 wrap */}
     </div>
   );
 }
