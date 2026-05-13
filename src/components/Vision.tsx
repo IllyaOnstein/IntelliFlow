@@ -134,21 +134,21 @@ export default function Vision() {
                 <Radar
                   speed={1.0}
                   scale={0.5}
-                  ringCount={10}
-                  spokeCount={10}
-                  ringThickness={0.05}
+                  ringCount={12}
+                  spokeCount={8}
+                  ringThickness={0.03}
                   spokeThickness={0.01}
                   sweepSpeed={1.0}
-                  sweepWidth={2.0}
+                  sweepWidth={2.5}
                   sweepLobes={1}
-                  color="#ff2929"
-                  backgroundColor="#580101"
-                  falloff={2.0}
-                  brightness={1.0}
+                  color="#ffb4a8"
+                  backgroundColor="transparent"
+                  falloff={1.5}
+                  brightness={1.2}
                   enableMouseInteraction={true}
                   mouseInfluence={0.1}
                 />
-                <div className="absolute inset-0 bg-[#120F17]/80 backdrop-blur-[2px]"></div>
+                <div className="absolute inset-0 bg-[#120F17]/60 backdrop-blur-[1px]"></div>
               </div>
 
               <div className="relative z-10">

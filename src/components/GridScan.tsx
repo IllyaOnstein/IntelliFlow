@@ -779,7 +779,9 @@ export const GridScan = ({
       stop = true;
       if (video) {
         const stream = video.srcObject;
-        if (stream) stream.getTracks().forEach((t: any) => t.stop());
+        if (stream && typeof (stream as any).getTracks === 'function') {
+          (stream as any).getTracks().forEach((t: any) => t.stop());
+        }
         video.pause();
         video.srcObject = null;
       }

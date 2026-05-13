@@ -1,0 +1,15 @@
+src/components/TextType.tsx:55:          entries.forEach(entry => {
+src/components/GridScan.tsx:783:          (stream as any).getTracks().forEach((t: any) => t.stop());
+src/components/SplashCursor.tsx:240:      keywords.forEach(keyword => {
+src/components/SplashCursor.tsx:742:          pointers.forEach(p => {
+src/components/SplashCursor.tsx:751:        pointers.forEach(p => {
+src/components/LetterGlitch.tsx:108:    letters.current.forEach((letter, index) => {
+src/components/LetterGlitch.tsx:139:    letters.current.forEach(letter => {
+src/components/TargetCursor.tsx:104:        corners.forEach((corner, i) => {
+src/components/TargetCursor.tsx:179:      corners.forEach(corner => gsap.killTweensOf(corner));
+src/components/TargetCursor.tsx:205:          corners.forEach(c => {
+src/components/TargetCursor.tsx:212:      corners.forEach((corner, i) => {
+src/components/TargetCursor.tsx:232:          corners.forEach(c => {
+src/components/TargetCursor.tsx:244:          corners.forEach((corner, index) => {
+src/pages/Docs.tsx:32:          entries.forEach((entry) => {
+src/pages/Docs.tsx:42:    sections.forEach((section) => {

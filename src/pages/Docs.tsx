@@ -28,11 +28,13 @@ export default function Docs() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
+        if (entries && Array.isArray(entries)) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+            }
+          });
+        }
       },
       { rootMargin: '-100px 0px -80% 0px' }
     );

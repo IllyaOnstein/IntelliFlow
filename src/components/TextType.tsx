@@ -51,11 +51,13 @@ const TextType = ({
 
     const observer = new IntersectionObserver(
       entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
+        if (entries && Array.isArray(entries)) {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setIsVisible(true);
+            }
+          });
+        }
       },
       { threshold: 0.1 }
     );

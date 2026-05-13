@@ -222,7 +222,7 @@ export default function ColorBends({
       ro.observe(container);
       resizeObserverRef.current = ro;
     } else {
-      window.addEventListener('resize', handleResize);
+      (window as any).addEventListener('resize', handleResize);
     }
 
     const loop = () => {

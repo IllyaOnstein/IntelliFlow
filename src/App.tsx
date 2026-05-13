@@ -21,7 +21,7 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import { ModalProvider, useModals } from './contexts/ModalContext';
 import TargetCursor from './components/TargetCursor';
 import ClickSpark from './components/ClickSpark';
-import SplashCursor from './components/SplashCursor';
+// import SplashCursor from './components/SplashCursor';
 import LoginModal from './components/LoginModal';
 import WaitlistModal from './components/WaitlistModal';
 import StealthModal from './components/StealthModal';
@@ -101,7 +101,7 @@ export default function App() {
     <LanguageProvider>
       <ModalProvider>
         <TargetCursor />
-        <SplashCursor />
+        {/* <SplashCursor /> */}
         <ClickSpark sparkColor="#ffb4a8" sparkSize={20} sparkRadius={40} sparkCount={16} duration={600}>
           <BrowserRouter>
             <div className="min-h-screen bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary">
