@@ -5,18 +5,9 @@
 
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Features from './components/Features';
-import ReactFlowDemo from './components/ReactFlowDemo';
-import Safety from './components/Safety';
-import ContentVisual from './components/ContentVisual';
-import CoreCapabilities from './components/CoreCapabilities';
-import Alignment from './components/Alignment';
-import Vision from './components/Vision';
-import Pricing from './components/Pricing';
 import Footer from './components/Footer';
-import Docs from './pages/Docs';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ModalProvider, useModals } from './contexts/ModalContext';
 import TargetCursor from './components/TargetCursor';
@@ -56,20 +47,32 @@ function Home() {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
     >
-      <Hero />
-      <ReactFlowDemo />
-      <Features />
-      <ContentVisual />
-      <CoreCapabilities />
-      <Alignment />
-      <Vision />
-      <Pricing />
+      <Suspense fallback={<div className="h-48 w-full animate-pulse bg-gray-200" />}>
+        <Hero />
+        <ReactFlowDemo />
+        <Features />
+        <ContentVisual />
+        <CoreCapabilities />
+        <Alignment />
+        <Vision />
+        <Pricing />
+      </Suspense>
     </motion.main>
   );
 }
 
 import LuxuryLanding from './pages/LuxuryLanding';
-// ... existing imports
+// Lazy load components
+const Hero = lazy(() => import('./components/Hero'));
+const Features = lazy(() => import('./components/Features'));
+const ReactFlowDemo = lazy(() => import('./components/ReactFlowDemo'));
+const ContentVisual = lazy(() => import('./components/ContentVisual'));
+const CoreCapabilities = lazy(() => import('./components/CoreCapabilities'));
+const Alignment = lazy(() => import('./components/Alignment'));
+const Vision = lazy(() => import('./components/Vision'));
+const Pricing = lazy(() => import('./components/Pricing'));
+const Docs = lazy(() => import('./pages/Docs'));
+const LuxuryLanding = lazy(() => import('./pages/LuxuryLanding'));
 
 // ...
 
@@ -79,7 +82,7 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
-        <Route path="/luxury" element={<LuxuryLanding />} />
+        <Route path="/luxury" element={<Suspense fallback={<div>Loading...</div>}><LuxuryLanding /></Suspense>} />
         <Route path="/docs" element={
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -87,7 +90,7 @@ function AnimatedRoutes() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <Docs />
+            <Suspense fallback={<div>Loading Docs...</div>}><Docs /></Suspense>
           </motion.div>
         } />
       </Routes>
@@ -97,21 +100,32 @@ function AnimatedRoutes() {
 
 
 export default function App() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <LanguageProvider>
       <ModalProvider>
-        <TargetCursor />
-        {/* <SplashCursor /> */}
-        <ClickSpark sparkColor="#ffb4a8" sparkSize={20} sparkRadius={40} sparkCount={16} duration={600}>
-          <BrowserRouter>
-            <div className="min-h-screen bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary">
-              <Navbar />
-              <AnimatedRoutes />
-              <Footer />
-              <GlobalModals />
-            </div>
-          </BrowserRouter>
-        </ClickSpark>
+        {!isMobile && (
+          <>
+            <TargetCursor />
+            <ClickSpark sparkColor="#ffb4a8" sparkSize={20} sparkRadius={40} sparkCount={16} duration={600} />
+          </>
+        )}
+        <BrowserRouter>
+          <div className="min-h-screen bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary">
+            <Navbar />
+            <AnimatedRoutes />
+            <Footer />
+            <GlobalModals />
+          </div>
+        </BrowserRouter>
       </ModalProvider>
     </LanguageProvider>
   );
